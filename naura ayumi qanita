@@ -1,0 +1,90 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class SistemAntrianBilliard {
+
+    private static Queue<Pelanggan> antrian = new LinkedList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\n**Sistem Antrian Biliar**");
+            System.out.println("1. Tambah Pelanggan");
+            System.out.println("2. Panggil Pelanggan");
+            System.out.println("3. Lihat Antrian");
+            System.out.println("4. Keluar");
+            System.out.print("Pilih menu: ");
+
+            int pilihan = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (pilihan) {
+                case 1:
+                    tambahPelanggan();
+                    break;
+                case 2:
+                    panggilPelanggan();
+                    break;
+                case 3:
+                    lihatAntrian();
+                    break;
+                case 4:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid!");
+            }
+        }
+
+        System.out.println("Sistem antrian billiard telah ditutup.");
+    }
+
+    private static void tambahPelanggan() {
+        System.out.print("Nama pelanggan: ");
+        String nama = scanner.nextLine();
+
+        Pelanggan pelanggan = new Pelanggan(nama);
+        antrian.add(pelanggan);
+
+        System.out.println("Pelanggan " + nama + " telah ditambahkan ke antrian.");
+    }
+
+    private static void panggilPelanggan() {
+        if (antrian.isEmpty()) {
+            System.out.println("Antrian kosong!");
+            return;
+        }
+
+        Pelanggan pelanggan = antrian.poll();
+        System.out.println("Pelanggan " + pelanggan.getNama() + ", silakan ke meja billiard!");
+    }
+
+    private static void lihatAntrian() {
+        if (antrian.isEmpty()) {
+            System.out.println("Antrian kosong!");
+            return;
+        }
+
+        System.out.println("\n**Daftar Antrian**");
+        int no = 1;
+        for (Pelanggan pelanggan : antrian) {
+            System.out.println(no + ". " + pelanggan.getNama());
+            no++;
+        }
+    }
+}
+
+class Pelanggan {
+    private String nama;
+
+    public Pelanggan(String nama) {
+        this.nama = nama;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+}
